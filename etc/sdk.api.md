@@ -3975,7 +3975,7 @@ export class Vote implements UpdateableNetwork {
     getAddress(): string;
     getAll(): Promise<Proposal[]>;
     getProposalVotes(proposalId: BigNumber): Promise<ProposalVote[]>;
-    hasVoted(proposalId: string, account?: string): Promise<boolean>;
+    hasVoted(proposalId: BigNumberish, account?: string): Promise<boolean>;
     // (undocumented)
     metadata: ContractMetadata<VoteERC20, typeof Vote.schema>;
     // (undocumented)

@@ -195,7 +195,7 @@ export class Vote implements UpdateableNetwork {
    * @returns - True if the account has already voted on the proposal.
    */
   public async hasVoted(
-    proposalId: string,
+    proposalId: BigNumberish,
     account?: string,
   ): Promise<boolean> {
     if (!account) {
@@ -220,7 +220,7 @@ export class Vote implements UpdateableNetwork {
    * @param proposalId - The proposal ID to check.
    * @returns - True if the proposal can be executed, false otherwise.
    */
-  public async canExecute(proposalId: string): Promise<boolean> {
+  public async canExecute(proposalId: BigNumberish): Promise<boolean> {
     await this.ensureExists(proposalId);
 
     const proposal = await this.get(proposalId);
@@ -280,7 +280,7 @@ export class Vote implements UpdateableNetwork {
    * @internal
    * @param proposalId - Proposal to check for
    */
-  private async ensureExists(proposalId: string): Promise<void> {
+  private async ensureExists(proposalId: BigNumberish): Promise<void> {
     try {
       await this.contractWrapper.readContract.state(proposalId);
     } catch (e) {
@@ -410,7 +410,7 @@ export class Vote implements UpdateableNetwork {
    * @param reason - (optional) The reason for the vote.
    */
   public async vote(
-    proposalId: string,
+    proposalId: BigNumberish,
     voteType: VoteType,
     reason = "",
   ): Promise<TransactionResult> {
@@ -437,7 +437,7 @@ export class Vote implements UpdateableNetwork {
    *
    * @param proposalId - The proposal id to execute.
    */
-  public async execute(proposalId: string): Promise<TransactionResult> {
+  public async execute(proposalId: BigNumberish): Promise<TransactionResult> {
     await this.ensureExists(proposalId);
 
     const proposal = await this.get(proposalId);

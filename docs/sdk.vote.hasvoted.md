@@ -9,14 +9,14 @@ Check If Wallet Voted
 <b>Signature:</b>
 
 ```typescript
-hasVoted(proposalId: string, account?: string): Promise<boolean>;
+hasVoted(proposalId: BigNumberish, account?: string): Promise<boolean>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  proposalId | string | The unique identifier of a proposal . |
+|  proposalId | BigNumberish | The unique identifier of a proposal . |
 |  account | string | (optional) wallet account address. Defaults to connected signer. |
 
 <b>Returns:</b>
