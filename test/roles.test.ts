@@ -1,8 +1,9 @@
+import { AddressZero } from "@ethersproject/constants";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { Edition } from "../src/index";
 import { sdk, signers } from "./before.test";
 
-import { assert } from "chai";
+import { assert, expect } from "chai";
 
 global.fetch = require("node-fetch");
 
@@ -111,5 +112,31 @@ describe("Roles Contract", async () => {
           "0xf16851cb58F3b3881e6bdAD21f57144E9aCf602E",
         ),
     );
+  });
+
+  describe("Transferability", () => {
+    it("Should allow transferability to be disabled", async () => {
+      const result = await bundleContract.roles.getAll();
+      console.log("result", result);
+
+      expect(result.transfer).to.contain(AddressZero);
+      expect(result.transfer).to.contain(adminWallet.address);
+
+      await bundleContract.roles.setAll({
+        transfer: [adminWallet.address],
+        admin: result.admin,
+        minter: result.minter,
+      });
+
+      const secondResult = await bundleContract.roles.getAll();
+
+      console.log(secondResult);
+      expect(secondResult.transfer).to.contain(adminWallet.address);
+      assert.lengthOf(
+        secondResult.transfer,
+        1,
+        "Only one address should be permitted to transfer",
+      );
+    });
   });
 });
